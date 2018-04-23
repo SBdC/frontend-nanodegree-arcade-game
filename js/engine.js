@@ -18,15 +18,17 @@ var Engine = (function(global) {
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-    var doc = global.document,
+    var
+        doc = global.document,
         win = global.window,
+        game= doc.getElementById("game"),
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
 
     canvas.width = 1010;
     canvas.height = 930;
-    doc.body.appendChild(canvas);
+    game.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -113,16 +115,16 @@ var Engine = (function(global) {
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',
                 'images/stone-block.png',  // Row 3 of 3 of stone
-                'images/grass-block.png',
-                'images/grass-block.png',
-                'images/grass-block.png',  // Row 1 of 2 of grass
+                'images/stone-block.png',
+
+         // Row 1 of 2 of grass
                 'images/grass-block.png',
                 'images/grass-block.png',
 
                    // Row 2 of 2 of grass
             ],
 
-            numRows = 11,
+            numRows = 9,
             numCols = 11,
             row, col;
 
@@ -181,7 +183,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-boy_dead.png'
     ]);
     Resources.onReady(init);
 
