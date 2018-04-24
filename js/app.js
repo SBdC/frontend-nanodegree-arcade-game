@@ -1,5 +1,6 @@
 // Enemies our player must avoid
 let allEnemies = [];
+let allGems = [];
 let canvasWidth = 1110;
 let canvasHeight = 930;
 
@@ -88,7 +89,7 @@ Player.prototype.render = function() {
 
 
 
-Player.prototype.update = function(dt) {
+Player.prototype.update = function() {
 
   if (this.x <= 0) {
     this.x = 0;
@@ -102,31 +103,35 @@ Player.prototype.update = function(dt) {
   }
 
 
-  // Check for collisions
 
-  allEnemies.forEach(function(enemy) {
-
-
-    if (player.x + player.width >= enemy.x &&
-      player.x <= enemy.x + enemy.width &&
-      player.y + player.height >= enemy.y &&
-      player.y <= enemy.y + enemy.height
-    ) {
-      player.x = player.startX;
-      player.y = player.startY;
-      lives();
-
-    }
-
-
-
-
-
-
-
-  });
 
 }
+
+
+
+
+  // Check for collisions
+function  checkCollisions() {
+allEnemies.forEach(function(enemy) {
+
+
+  if (player.x + player.width >= enemy.x &&
+    player.x <= enemy.x + enemy.width &&
+    player.y + player.height >= enemy.y &&
+    player.y <= enemy.y + enemy.height
+  ) {
+    player.x = player.startX;
+    player.y = player.startY;
+    lives();
+
+  }
+
+});
+
+}
+
+
+
 
 Player.prototype.handleInput = function(key) {
   switch (key) {
@@ -178,6 +183,29 @@ document.addEventListener('keyup', function(e) {
 });
 
 
+const Gem = function(x, y, sprite) {
+  this.x = 250;
+  this.y = 250;
+
+
+  // Variables applied to each of our instances go here,
+  // we've provided one for you to get started
+
+  // The image/sprite for our enemies, this uses
+  // a helper we've provided to easily load images
+  this.sprite = 'images/Gem-Blue.png';
+};
+
+Gem.prototype.render = function() {
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+(function createGems() {
+  const gem1 = new Gem();
+
+  allGems.push(gem1);
+
+})();
 
 
 // test for collision player and enemey
