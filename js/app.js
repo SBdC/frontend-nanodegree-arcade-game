@@ -8,6 +8,13 @@ const health = document.querySelector("#health");
 const bonus = document.querySelector(".bonus");
 const timer = document.querySelector(".timer h2");
 
+const tileWidth = 101;
+const tileHeight = 83;
+const gemWidth = 101;
+const gemHeight = 83;
+const gemsWin = 80;
+
+
 
 const Enemy = function(x, y, speed, width, height, sprite) {
   this.x = x;
@@ -43,10 +50,10 @@ Enemy.prototype.update = function(dt) {
   this.x += this.speed * dt;
 
   // When enemy goes off the canvas, bring it back on the other side
-  if (this.x <= -50) {
-    this.x = canvasWidth + 50;
-  } else if (this.x >= canvasWidth + 50) {
-    this.x = -50;
+  if (this.x <= - (this.width*.5)) {
+    this.x = canvasWidth + (this.width*.5);
+  } else if (this.x >= canvasWidth + (this.width*.5)) {
+    this.x = - (this.width*.5);
   }
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
@@ -91,6 +98,7 @@ Player.prototype.render = function() {
 
 Player.prototype.update = function() {
 
+  //keep player in canvas borders
   if (this.x <= 0) {
     this.x = 0;
   } else if (this.x >= 900) {
@@ -104,9 +112,7 @@ Player.prototype.update = function() {
 
 
 
-
 }
-
 
 
 
@@ -183,27 +189,41 @@ document.addEventListener('keyup', function(e) {
 });
 
 
-const Gem = function(x, y, sprite) {
-  this.x = 250;
-  this.y = 250;
+// * Math.floor(Math.random() * 10);
+//
+// * (Math.floor(Math.random() * 4) + 2) + 2;;
 
 
-  // Variables applied to each of our instances go here,
-  // we've provided one for you to get started
+const Gem = function(  x, y, sprite) {
 
-  // The image/sprite for our enemies, this uses
-  // a helper we've provided to easily load images
+
+  this.x = (tileWidth - 15) + (getRandomInt(0, 900));
+  this.y = (tileHeight - 10)  + (getRandomInt(90, 410));
+
   this.sprite = 'images/Gem-Blue.png';
-};
 
+
+
+};
 Gem.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-(function createGems() {
-  const gem1 = new Gem();
 
-  allGems.push(gem1);
+
+
+(function createGems() {
+
+
+
+
+
+  const gem1 = new Gem();
+  const gem2 = new Gem();
+  const gem3 = new Gem();
+  const gem4 = new Gem();
+
+  allGems.push(gem1, gem2, gem3, gem4);
 
 })();
 
