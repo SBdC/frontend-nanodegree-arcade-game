@@ -10,8 +10,7 @@ const timer = document.querySelector(".timer h2");
 
 const tileWidth = 101;
 const tileHeight = 83;
-const gemWidth = 101;
-const gemHeight = 83;
+
 const gemsWin = 80;
 
 
@@ -189,24 +188,27 @@ document.addEventListener('keyup', function(e) {
 });
 
 
-// * Math.floor(Math.random() * 10);
-//
-// * (Math.floor(Math.random() * 4) + 2) + 2;;
 
 
-const Gem = function(  x, y, sprite) {
+const Gem = function(x, y, sprite, width, height) {
+// Math.floor(Math.random() * (max - min + 1)) + min;
 
+  this.x = Math.floor(Math.random() * (890 - 0 + 1)) + 0;
+  this.y = Math.floor(Math.random() * (480 - 120 + 1)) + 120;
 
-  this.x = (tileWidth - 15) + (getRandomInt(0, 900));
-  this.y = (tileHeight - 10)  + (getRandomInt(90, 410));
+console.log( this.x, this.y)
 
   this.sprite = 'images/Gem-Blue.png';
+
+  this.width = 51;
+  this.height = 80;
 
 
 
 };
 Gem.prototype.render = function() {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  ctx.drawImage(Resources.get(this.sprite),this.x, this.y, this.width, this.height);
+
 };
 
 
@@ -215,13 +217,10 @@ Gem.prototype.render = function() {
 (function createGems() {
 
 
-
-
-
-  const gem1 = new Gem();
-  const gem2 = new Gem();
-  const gem3 = new Gem();
-  const gem4 = new Gem();
+  const gem1 = new Gem(80,80);
+  const gem2 = new Gem(80,80);
+  const gem3 = new Gem(80,80);
+  const gem4 = new Gem(80,80);
 
   allGems.push(gem1, gem2, gem3, gem4);
 
