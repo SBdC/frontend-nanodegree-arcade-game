@@ -1,6 +1,8 @@
 // Enemies our player must avoid
 let allEnemies = [];
 let allGems = [];
+let collectedGems = [];
+let allLives = [];
 let canvasWidth = 1110;
 let canvasHeight = 930;
 
@@ -49,10 +51,10 @@ Enemy.prototype.update = function(dt) {
   this.x += this.speed * dt;
 
   // When enemy goes off the canvas, bring it back on the other side
-  if (this.x <= - (this.width*.5)) {
-    this.x = canvasWidth + (this.width*.5);
-  } else if (this.x >= canvasWidth + (this.width*.5)) {
-    this.x = - (this.width*.5);
+  if (this.x <= -(this.width * .5)) {
+    this.x = canvasWidth + (this.width * .5);
+  } else if (this.x >= canvasWidth + (this.width * .5)) {
+    this.x = -(this.width * .5);
   }
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
@@ -67,7 +69,7 @@ Enemy.prototype.render = function() {
 
 //PLayer
 
-const Player = function(x, y, width, height, startX, startY, sprite) {
+const Player = function(x, y, width, height, startX, startY, sprite, collectionGems) {
   this.x = x;
   this.y = y;
 
@@ -78,6 +80,8 @@ const Player = function(x, y, width, height, startX, startY, sprite) {
   this.startY = 570;
 
   this.sprite = "images/char-boy.png";
+
+  this.collectionGems = 0;
 
 };
 
@@ -115,23 +119,46 @@ Player.prototype.update = function() {
 
 
 
-  // Check for collisions
-function  checkCollisions() {
-allEnemies.forEach(function(enemy) {
+// Check for collisions
+// test for collision player and enemey
+function checkCollisions() {
+  allEnemies.forEach(function(enemy) {
 
 
-  if (player.x + player.width >= enemy.x &&
-    player.x <= enemy.x + enemy.width &&
-    player.y + player.height >= enemy.y &&
-    player.y <= enemy.y + enemy.height
-  ) {
-    player.x = player.startX;
-    player.y = player.startY;
-    lives();
+    if (player.x + player.width >= enemy.x &&
+      player.x <= enemy.x + enemy.width &&
+      player.y + player.height >= enemy.y &&
+      player.y <= enemy.y + enemy.height
+    ) {
+      player.x = player.startX;
+      player.y = player.startY;
+      allLives.pop();
 
-  }
+      if (allLives.length === 0) {
+        console.log("game over")
+      }
+    }
 
-});
+    //test for collision player and gems
+    // Collect the gems
+
+    allGems.forEach(function(gem) {
+
+      if (player.x + player.width >= gem.x &&
+        player.x <= gem.x + gem.width &&
+        player.y + player.height >= gem.y &&
+        player.y <= enemy.y + gem.height
+      ); {
+        console.log("I got one");
+
+      }
+
+
+    });
+
+
+
+  });
 
 }
 
@@ -167,12 +194,6 @@ Player.prototype.handleInput = function(key) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-function lives(){
-health.innerHTML="";
-
-
-
-}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -191,46 +212,77 @@ document.addEventListener('keyup', function(e) {
 
 
 const Gem = function(x, y, sprite, width, height) {
-// Math.floor(Math.random() * (max - min + 1)) + min;
 
-  this.x = Math.floor(Math.random() * (890 - 0 + 1)) + 0;
-  this.y = Math.floor(Math.random() * (480 - 120 + 1)) + 120;
+  this.x = 95 * (Math.floor(Math.random() * (10)) + 1) + 6;
+  this.y = 83 * (Math.floor(Math.random() * (4)) + 1) + 166;
 
-console.log( this.x, this.y)
 
   this.sprite = 'images/Gem-Blue.png';
 
-  this.width = 51;
-  this.height = 80;
+  this.width = 40;
+  this.height = 60;
 
 
 
 };
 Gem.prototype.render = function() {
-  ctx.drawImage(Resources.get(this.sprite),this.x, this.y, this.width, this.height);
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
 
 };
 
 
-
+//create gems
 
 (function createGems() {
 
 
-  const gem1 = new Gem(80,80);
-  const gem2 = new Gem(80,80);
-  const gem3 = new Gem(80,80);
-  const gem4 = new Gem(80,80);
+  const gem1 = new Gem();
+  const gem2 = new Gem();
+  const gem3 = new Gem();
+  const gem4 = new Gem();
+  const gem5 = new Gem();
+  const gem6 = new Gem();
+  const gem7 = new Gem();
+  const gem8 = new Gem();
 
-  allGems.push(gem1, gem2, gem3, gem4);
+
+  allGems.push(gem1, gem2, gem3, gem4, gem5, gem6, gem7, gem8);
 
 })();
 
 
-// test for collision player and enemey
 
-// Check collision between player and enemies
 
+
+
+const Live = function(x, y, sprite, width, height) {
+
+  this.x = x;
+  this.y = y;
+
+  this.sprite = 'images/Heart.png';
+
+  this.width = 40;
+  this.height = 60;
+
+};
+
+Live.prototype.render = function() {
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
+
+};
+
+(function createLives() {
+
+
+  const live1 = new Live(860, 50);
+  const live2 = new Live(910, 50);
+  const live3 = new Live(960, 50);
+
+
+  allLives.push(live1, live2, live3);
+
+})();
 
 // random integer from MDN
 function getRandomInt(min, max) {
