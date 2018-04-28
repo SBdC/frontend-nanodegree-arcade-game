@@ -1,19 +1,17 @@
 // Enemies our player must avoid
 let allEnemies = [];
-let allGems = [];
-let collectedGems = [];
+
+let win = 0;
+
 let allLives = [];
 let canvasWidth = 1110;
 let canvasHeight = 930;
 
-const health = document.querySelector("#health");
-const bonus = document.querySelector(".bonus");
-const timer = document.querySelector(".timer h2");
 
 const tileWidth = 101;
 const tileHeight = 83;
 
-const gemsWin = 80;
+
 
 
 
@@ -69,7 +67,7 @@ Enemy.prototype.render = function() {
 
 //PLayer
 
-const Player = function(x, y, width, height, startX, startY, sprite, collectionGems) {
+const Player = function(x, y, width, height, startX, startY, sprite, wins) {
   this.x = x;
   this.y = y;
 
@@ -81,7 +79,7 @@ const Player = function(x, y, width, height, startX, startY, sprite, collectionG
 
   this.sprite = "images/char-boy.png";
 
-  this.collectionGems = 0;
+
 
 };
 
@@ -109,6 +107,11 @@ Player.prototype.update = function() {
   }
   if (this.y <= 10) {
     this.y = 570;
+    win += 1;
+    console.log(win);
+      if(win === 3){console.log("you won")}
+
+
   } else if (this.y >= 580) {
     this.y = 570;
   }
@@ -135,26 +138,9 @@ function checkCollisions() {
       allLives.pop();
 
       if (allLives.length === 0) {
-        console.log("game over")
+        player.defeat();
       }
     }
-
-    //test for collision player and gems
-    // Collect the gems
-
-    allGems.forEach(function(gem) {
-
-      if (player.x + player.width >= gem.x &&
-        player.x <= gem.x + gem.width &&
-        player.y + player.height >= gem.y &&
-        player.y <= enemy.y + gem.height
-      ); {
-        console.log("I got one");
-
-      }
-
-
-    });
 
 
 
@@ -162,7 +148,26 @@ function checkCollisions() {
 
 }
 
+Player.prototype.defeat = function (){
+   console.log("you lost modal shows up")
+  "use strict";
+  // Get the modal
+  const elModal = document.getElementById('myModal');
 
+  elModal.setAttribute("style", "display:block;");
+  // Get the button that opens the modal
+  var btn = document.getElementById("restart");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on the button, open the modal
+  btn.onclick = function() {
+      window.location.reload();
+  }
+
+
+}
 
 
 Player.prototype.handleInput = function(key) {
@@ -211,44 +216,7 @@ document.addEventListener('keyup', function(e) {
 
 
 
-const Gem = function(x, y, sprite, width, height) {
 
-  this.x = 95 * (Math.floor(Math.random() * (10)) + 1) + 6;
-  this.y = 83 * (Math.floor(Math.random() * (4)) + 1) + 166;
-
-
-  this.sprite = 'images/Gem-Blue.png';
-
-  this.width = 40;
-  this.height = 60;
-
-
-
-};
-Gem.prototype.render = function() {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
-
-};
-
-
-//create gems
-
-(function createGems() {
-
-
-  const gem1 = new Gem();
-  const gem2 = new Gem();
-  const gem3 = new Gem();
-  const gem4 = new Gem();
-  const gem5 = new Gem();
-  const gem6 = new Gem();
-  const gem7 = new Gem();
-  const gem8 = new Gem();
-
-
-  allGems.push(gem1, gem2, gem3, gem4, gem5, gem6, gem7, gem8);
-
-})();
 
 
 
