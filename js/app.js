@@ -40,7 +40,7 @@ const Enemy = function(x, y, speed, width, height, sprite) {
   const bug7 = new Enemy(600, 260);
   const bug8 = new Enemy(660, 190);
 
-allEnemies.push(bug1, bug2, bug3, bug4, bug5, bug6, bug7, bug8);
+// allEnemies.push(bug1, bug2, bug3, bug4, bug5, bug6, bug7, bug8);
 
 })();
 
@@ -103,10 +103,13 @@ Player.prototype.update = function() {
   if (this.x <= 0) {
     this.x = 0;
   } else if (this.x >= 900) {
-    this.x = 900;
+     this.x = 925;
+
   }
   if (this.y <= 45) {
-    this.y = 570;
+    //player goes back to original position
+    this.y = this.startY;
+    this.x = this.startX;
       //keep track of stars and victory
     win += 1;
     createStars();
