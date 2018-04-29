@@ -40,7 +40,7 @@ const Enemy = function(x, y, speed, width, height, sprite) {
   const bug7 = new Enemy(600, 260);
   const bug8 = new Enemy(660, 190);
 
-// allEnemies.push(bug1, bug2, bug3, bug4, bug5, bug6, bug7, bug8);
+allEnemies.push(bug1, bug2, bug3, bug4, bug5, bug6, bug7, bug8);
 
 })();
 
