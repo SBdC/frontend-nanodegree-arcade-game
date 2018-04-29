@@ -1,6 +1,20 @@
-frontend-nanodegree-arcade-game
-===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+# Arcade Game BUG ALARM
+This game is a project from the Udacity Nanodegree Front-End Web Developement
+
+##How to PLAY
+Use your keyboard arrows to move the player around the canvas.
+The objective is to gather three stars by reaching the water without touching any bug.
+If you collide with a bug you will loose one of your three hearts.
+Once there are no more hearts left, the game will be over.
+
+##PLAY the game
+
+You can play the game here:
+http://www.sarabentodecastro.com/arcadegame
+
+##Acknowledgements
+* The game was developed from the initially given code by Udacity
+* All graphics were given by Udacity, except the collages of my authorship that appear at the end on the modals.
+* Fonts used are from Google Fonts
