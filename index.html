@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>Effective JavaScript: Frogger</title>
+  <title>Bug Alarm</title>
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Faster+One|Raleway+Dots" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Faster+One|Open+Sans" rel="stylesheet">
 </head>
 
 <body>
   <header class="header">
 
-
-    <div class="score">
-
       <h1>BUG ALARM</h1>
+      <p> Reach the water to gather a star, collect three to win. Don't touch the bugs, you will loose a heart.If have no hearts left, the game is over</p>
 
   </header>
   <main id="game">
@@ -23,10 +21,11 @@
     <div id="myModal" class="modal">
 
       <!-- Modal content -->
-      <div class="modal-content" >
+      <div class="modal-content">
+        <img alt="modal picture" id="modal-image">
         <div id="modal-text"></div>
         <button id="restart">PLAY AGAIN</button>
-</div>
+      </div>
 
     </div>
   </main>

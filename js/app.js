@@ -16,29 +16,31 @@ const tileHeight = 83;
 const elModal = document.getElementById('myModal');
 const elModalText = document.getElementById('modal-text');
 const btn = document.getElementById("restart");
+const elImg = document.getElementById("modal-image");
 
+
+//function constructor for enemy
 
 const Enemy = function(x, y, speed, width, height, sprite) {
   this.x = x;
   this.y = y;
-  this.speed = getRandomInt(50, 220);
+  this.speed = getRandomInt(100, 220);
   this.width = 101;
   this.height = 69;
-
-  // Variables applied to each of our instances go here,
-  // we've provided one for you to get started
-
-  // The image/sprite for our enemies, this uses
-  // a helper we've provided to easily load images
   this.sprite = 'images/enemy-bug.png';
 };
 
 (function createEnemies() {
   const bug1 = new Enemy(80, 100);
-  const bug2 = new Enemy(80, 410);
-  const bug3 = new Enemy(80, 190);
+  const bug2 = new Enemy(200, 410);
+  const bug3 = new Enemy(320, 190);
   const bug4 = new Enemy(80, 260);
-  allEnemies.push(bug1, bug2, bug3, bug4);
+  const bug5 = new Enemy(160, 340);
+  const bug6 = new Enemy(400, 190);
+  const bug7 = new Enemy(600, 260);
+  const bug8 = new Enemy(660, 190);
+
+allEnemies.push(bug1, bug2, bug3, bug4, bug5, bug6, bug7, bug8);
 
 })();
 
@@ -57,9 +59,6 @@ Enemy.prototype.update = function(dt) {
   } else if (this.x >= canvasWidth + (this.width * .5)) {
     this.x = -(this.width * .5);
   }
-  // You should multiply any movement by the dt parameter
-  // which will ensure the game runs at the same speed for
-  // all computers.
 
 };
 
@@ -68,21 +67,19 @@ Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-//PLayer
+//function constructor for player
 
 const Player = function(x, y, width, height, startX, startY, sprite, wins) {
   this.x = x;
   this.y = y;
 
-  this.width = 71;
-  this.height = 74;
+  this.width = 81;
+  this.height = 137;
 
   this.startX = 450;
   this.startY = 570;
 
   this.sprite = "images/char-boy.png";
-
-
 
 };
 
@@ -97,22 +94,22 @@ Player.prototype.render = function() {
 }
 
 
-
+  //keep player in canvas borders
 
 
 Player.prototype.update = function() {
 
-  //keep player in canvas borders
+
   if (this.x <= 0) {
     this.x = 0;
   } else if (this.x >= 900) {
     this.x = 900;
   }
-  if (this.y <= 10) {
+  if (this.y <= 45) {
     this.y = 570;
+      //keep track of stars and victory
     win += 1;
     createStars();
-
 
   } else if (this.y >= 580) {
     this.y = 570;
@@ -125,22 +122,23 @@ Player.prototype.update = function() {
 
 
 // Check for collisions
-// test for collision player and enemey
+
+
 function checkCollisions() {
   allEnemies.forEach(function(enemy) {
 
 
-    if (player.x + player.width >= enemy.x &&
-      player.x <= enemy.x + enemy.width &&
-      player.y + player.height >= enemy.y &&
-      player.y <= enemy.y + enemy.height
-    ) {
+    if (Math.abs(enemy.x - player.x) < 87 &&
+      Math.abs(enemy.y - player.y) < 60) {
       player.x = player.startX;
       player.y = player.startY;
       allLives.pop();
-
+// check for game over
       if (allLives.length === 0) {
         player.defeat();
+        allEnemies=[];
+        delete player.sprite;
+
       }
     }
 
@@ -150,15 +148,19 @@ function checkCollisions() {
 
 }
 
+//function constructor for you lost modal
+
 Player.prototype.defeat = function() {
 
   "use strict";
-  // Get the modal
-  
-  elModal.setAttribute("style", "display:block;");
-  elModalText.innerHTML = "<p>you lost the game</p><p>do you wish to try again</p>";
 
-  // When the user clicks on the button, restarGame
+  // Get the modal
+
+  elModal.setAttribute("style", "display:block;");
+  elImg.setAttribute("src", "images/lose.png");
+  elModalText.innerHTML = "<p>You were runned over by Bugs!!</p><p>Do you wish to try again?</p>";
+
+  // When the user clicks on the button, restartGame
   btn.onclick = function() {
     window.location.reload();
 
@@ -166,35 +168,28 @@ Player.prototype.defeat = function() {
 
 }
 
-
+// movements of player, keyboard event
 Player.prototype.handleInput = function(key) {
+
   switch (key) {
     case 'up':
-      this.y -= 80;
+      this.y -= 75;
       break;
     case 'down':
-      this.y += 80;
+      this.y += 75;
 
       break;
     case 'left':
-      this.x -= 90;
+      this.x -= 95;
 
       break;
     case 'right':
-      this.x += 90;
+      this.x += 95;
 
       break;
   };
 
 }
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
 
 
 // This listens for key presses and sends the keys to your
@@ -213,7 +208,7 @@ document.addEventListener('keyup', function(e) {
 
 
 
-
+//function constructor for lives
 const Live = function(x, y, sprite, width, height) {
 
   this.x = x;
@@ -244,7 +239,7 @@ Live.prototype.render = function() {
 })();
 
 
-
+//function constructor for stars
 
 const Star = function(x, y, sprite, width, height) {
 
@@ -253,8 +248,8 @@ const Star = function(x, y, sprite, width, height) {
 
   this.sprite = 'images/Star.png';
 
-  this.width = 50;
-  this.height = 70;
+  this.width = 71;
+  this.height = 120;
 
 };
 
@@ -262,37 +257,55 @@ Star.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
 
 };
-// Setting inheritance chain to inherit the render method from Enemy
+
+//function to add stars to each win and add enemies for difficulty
 
 function createStars() {
 
-  const star1 = new Star(20, 50);
-  const star2 = new Star(70, 50);
-  const star3 = new Star(120, 50);
+  const star1 = new Star(20, 20);
+  const star2 = new Star(90, 20);
+  const star3 = new Star(160, 20);
 
   if (win === 1) {
     allStars.push(star1);
+    const bug9 = new Enemy(80, 100);
+    const bug10 = new Enemy(200, 410);
+    const bug11= new Enemy(320, 190);
+    const bug12= new Enemy(80, 260);
+
+    allEnemies.push(bug9, bug10, bug11, bug12);
+
+
   } else if (win === 2) {
     allStars.push(star2);
+    const bug13 = new Enemy(160, 340);
+    const bug14 = new Enemy(400, 190);
+    const bug15= new Enemy(600, 260);
+    const bug16= new Enemy(660, 190);
+    allEnemies.push(bug13, bug14, bug15, bug16);
+
   } else if (win === 3) {
     allStars.push(star3);
+
     player.win();
+
+    allEnemies=[];
+    delete player.sprite;
+
+
   }
 };
 
 
 
 Player.prototype.win = function() {
-  console.log("you win modal shows up")
+
   "use strict";
   // Get the modal
 
   elModal.setAttribute("style", "display:block;");
-  elModalText.innerHTML = "<p>you won the game</p><p>do you wish to play again</p>";
-
-
-
-
+  elImg.setAttribute("src", "images/win.png");
+  elModalText.innerHTML = "<p>You have skipped all the bugs! You Won!</p><p>Do you wish to play again?</p>";
 
 
   // When the user clicks on the button, restarGame
