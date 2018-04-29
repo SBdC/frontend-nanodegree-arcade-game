@@ -82,7 +82,7 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
-      
+
     }
 
     /* This is called by the update function and loops through all of the
@@ -177,6 +177,10 @@ var Engine = (function(global) {
             live.render();
 
         });
+        allStars.forEach(function(star) {
+            star.render();
+
+        });
     }
 
     /* This function does nothing but it could have been a good place to
@@ -197,7 +201,8 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/Heart.png'
+        'images/Heart.png',
+        'images/Star.png'
 
     ]);
     Resources.onReady(init);

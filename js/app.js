@@ -4,6 +4,7 @@ let allEnemies = [];
 let win = 0;
 
 let allLives = [];
+let allStars = [];
 let canvasWidth = 1110;
 let canvasHeight = 930;
 
@@ -12,7 +13,9 @@ const tileWidth = 101;
 const tileHeight = 83;
 
 
-
+const elModal = document.getElementById('myModal');
+const elModalText = document.getElementById('modal-text');
+const btn = document.getElementById("restart");
 
 
 const Enemy = function(x, y, speed, width, height, sprite) {
@@ -108,8 +111,7 @@ Player.prototype.update = function() {
   if (this.y <= 10) {
     this.y = 570;
     win += 1;
-    console.log(win);
-      if(win === 3){console.log("you won")}
+    createStars();
 
 
   } else if (this.y >= 580) {
@@ -148,24 +150,19 @@ function checkCollisions() {
 
 }
 
-Player.prototype.defeat = function (){
-   console.log("you lost modal shows up")
+Player.prototype.defeat = function() {
+
   "use strict";
   // Get the modal
-  const elModal = document.getElementById('myModal');
-
+  
   elModal.setAttribute("style", "display:block;");
-  // Get the button that opens the modal
-  var btn = document.getElementById("restart");
+  elModalText.innerHTML = "<p>you lost the game</p><p>do you wish to try again</p>";
 
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-
-  // When the user clicks on the button, open the modal
+  // When the user clicks on the button, restarGame
   btn.onclick = function() {
-      window.location.reload();
-  }
+    window.location.reload();
 
+  }
 
 }
 
@@ -217,12 +214,6 @@ document.addEventListener('keyup', function(e) {
 
 
 
-
-
-
-
-
-
 const Live = function(x, y, sprite, width, height) {
 
   this.x = x;
@@ -251,6 +242,65 @@ Live.prototype.render = function() {
   allLives.push(live1, live2, live3);
 
 })();
+
+
+
+
+const Star = function(x, y, sprite, width, height) {
+
+  this.x = x;
+  this.y = y;
+
+  this.sprite = 'images/Star.png';
+
+  this.width = 50;
+  this.height = 70;
+
+};
+
+Star.prototype.render = function() {
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
+
+};
+// Setting inheritance chain to inherit the render method from Enemy
+
+function createStars() {
+
+  const star1 = new Star(20, 50);
+  const star2 = new Star(70, 50);
+  const star3 = new Star(120, 50);
+
+  if (win === 1) {
+    allStars.push(star1);
+  } else if (win === 2) {
+    allStars.push(star2);
+  } else if (win === 3) {
+    allStars.push(star3);
+    player.win();
+  }
+};
+
+
+
+Player.prototype.win = function() {
+  console.log("you win modal shows up")
+  "use strict";
+  // Get the modal
+
+  elModal.setAttribute("style", "display:block;");
+  elModalText.innerHTML = "<p>you won the game</p><p>do you wish to play again</p>";
+
+
+
+
+
+
+  // When the user clicks on the button, restarGame
+  btn.onclick = function() {
+    window.location.reload();
+  }
+
+}
 
 // random integer from MDN
 function getRandomInt(min, max) {
