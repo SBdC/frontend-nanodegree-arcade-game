@@ -14,6 +14,8 @@ Once there are no more hearts left, the game will be over.
 You can play the game here:
 http://www.sarabentodecastro.com/arcadegame
 
+If you wish to play the game locally please download or clone this repository and run index.html.
+
 ## Acknowledgements
 * The game was developed from the initially given code by Udacity
 * All graphics were given by Udacity, except the collages of my authorship that appear at the end on the modals.

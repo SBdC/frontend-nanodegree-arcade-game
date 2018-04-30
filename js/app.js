@@ -1,4 +1,6 @@
 // Enemies our player must avoid
+"use strict";
+
 let allEnemies = [];
 
 let win = 0;
@@ -9,12 +11,12 @@ let canvasWidth = 1110;
 let canvasHeight = 930;
 
 
-const tileWidth = 101;
-const tileHeight = 83;
+const TILEWIDTH = 101;
+const TILEHEIGHT = 83;
 
 
-const elModal = document.getElementById('myModal');
-const elModalText = document.getElementById('modal-text');
+const elModal = document.getElementById("myModal");
+const elModalText = document.getElementById("modal-text");
 const btn = document.getElementById("restart");
 const elImg = document.getElementById("modal-image");
 
@@ -54,10 +56,10 @@ Enemy.prototype.update = function(dt) {
   this.x += this.speed * dt;
 
   // When enemy goes off the canvas, bring it back on the other side
-  if (this.x <= -(this.width * .5)) {
-    this.x = canvasWidth + (this.width * .5);
-  } else if (this.x >= canvasWidth + (this.width * .5)) {
-    this.x = -(this.width * .5);
+  if (this.x <= -(this.width * 0.5)) {
+    this.x = canvasWidth + (this.width * 0.5);
+  } else if (this.x >= canvasWidth + (this.width * 0.5)) {
+    this.x = -(this.width * 0.5);
   }
 
 };
@@ -91,15 +93,13 @@ Player.prototype.render = function() {
     this.x,
     this.y
   );
-}
+};
 
 
   //keep player in canvas borders
 
 
 Player.prototype.update = function() {
-
-
   if (this.x <= 0) {
     this.x = 0;
   } else if (this.x >= 900) {
@@ -118,9 +118,7 @@ Player.prototype.update = function() {
     this.y = 570;
   }
 
-
-
-}
+};
 
 
 
@@ -140,7 +138,7 @@ function checkCollisions() {
       if (allLives.length === 0) {
         player.defeat();
         allEnemies=[];
-        delete player.sprite;
+
 
       }
     }
@@ -155,8 +153,6 @@ function checkCollisions() {
 
 Player.prototype.defeat = function() {
 
-  "use strict";
-
   // Get the modal
 
   elModal.setAttribute("style", "display:block;");
@@ -167,42 +163,44 @@ Player.prototype.defeat = function() {
   btn.onclick = function() {
     window.location.reload();
 
-  }
+  };
 
-}
+};
 
 // movements of player, keyboard event
 Player.prototype.handleInput = function(key) {
 
   switch (key) {
-    case 'up':
+    case "up":
       this.y -= 75;
       break;
-    case 'down':
+    case "down":
       this.y += 75;
 
       break;
-    case 'left':
+    case "left":
       this.x -= 95;
 
       break;
-    case 'right':
+    case "right":
       this.x += 95;
 
       break;
-  };
+  }
+
+
 
 }
 
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener("keyup", function(e) {
   var allowedKeys = {
-    37: 'left',
-    38: 'up',
-    39: 'right',
-    40: 'down'
+    37: "left",
+    38: "up",
+    39: "right",
+    40: "down"
   };
 
   player.handleInput(allowedKeys[e.keyCode]);
@@ -217,7 +215,7 @@ const Live = function(x, y, sprite, width, height) {
   this.x = x;
   this.y = y;
 
-  this.sprite = 'images/Heart.png';
+  this.sprite = "images/Heart.png";
 
   this.width = 40;
   this.height = 60;
@@ -249,7 +247,7 @@ const Star = function(x, y, sprite, width, height) {
   this.x = x;
   this.y = y;
 
-  this.sprite = 'images/Star.png';
+  this.sprite = "images/Star.png";
 
   this.width = 71;
   this.height = 120;
@@ -293,7 +291,6 @@ function createStars() {
     player.win();
 
     allEnemies=[];
-    delete player.sprite;
 
 
   }
@@ -303,7 +300,6 @@ function createStars() {
 
 Player.prototype.win = function() {
 
-  "use strict";
   // Get the modal
 
   elModal.setAttribute("style", "display:block;");
@@ -314,9 +310,9 @@ Player.prototype.win = function() {
   // When the user clicks on the button, restarGame
   btn.onclick = function() {
     window.location.reload();
-  }
+  };
 
-}
+};
 
 // random integer from MDN
 function getRandomInt(min, max) {
